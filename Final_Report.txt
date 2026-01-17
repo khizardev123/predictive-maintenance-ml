@@ -1,0 +1,54 @@
+Predictive Maintenance Project - Final Report
+============================================
+
+Author: Muhammad Khizar Arif 
+Date: 2026-01-13
+Project: System Failure Prediction using Log Data
+
+1. Dataset Overview
+-------------------
+The dataset analyzed is 'system_logs_ready_min.csv', which contains system logs and performance metrics. 
+- Total Rows: 876,100
+- Features: CPU Usage, Memory Usage, Request Count, Latency, and Error Count.
+- Target Variable: 'failure' (0.08% failure rate - Extreme Imbalance).
+
+2. Preprocessing & Balancing Strategy
+---------------------------------------
+To resolve the 'Zero Recall' problem, we implemented an aggressive balancing strategy:
+- Balanced Training Pool: We combined all 719 historical failure cases with a random sample of 5,000 normal cases. This pool was used for model training and evaluation to prevent the model from ignoring the minority class.
+- Real-world Note: It is acknowledged that deployment environments will be significantly more imbalanced, requiring maintenance of high recall.
+- Stratified Split: Used `stratify=y` to ensure failures are correctly represented in both training and testing sets.
+- Feature Scaling: StandardScaler was applied to all numeric telemetry metrics.
+
+3. Performance Results & Decision Thresholds
+---------------------------------------
+The focus of evaluation was shifted from aggregate accuracy to Recall for the failure class.
+
+- Final Selection: Logistic Regression (Recall-Optimized)
+  * Base Recall (0.5 threshold): 0.5972
+  * Status: Strong baseline with high threshold sensitivity.
+
+- Model Limitations: 
+  * Linear SVM showed robust performance similar to Logistic Regression.
+  * Tree-based models like Random Forest failed to detect minority failures reliably under this extreme imbalance, even with class weighting.
+
+4. Threshold Tuning (Logistic Regression)
+-----------------------------------------
+By lowering the decision threshold, we increased sensitivity, significantly boosting recall for the failure class.
+
+- Threshold 0.5: Recall 0.5972 | F1: 0.2960
+- Threshold 0.4: Recall 0.8056 | F1: 0.2886
+- Threshold 0.3: Recall 0.9167 | F1: 0.2573
+- Threshold 0.2: Recall 0.9792 | F1: 0.2384
+- Threshold 0.1: Recall 1.0000 | F1: 0.2255
+
+Recommended Setting: A threshold of 0.3 to 0.4 provides an optimal balance for predictive maintenance operations.
+
+5. Future Roadmap
+-----------------
+- SMOTE/ADASYN: Potential exploration of synthetic oversampling.
+- Optuna Optimization: Hyperparameter optimization using Optuna remains a future improvement for more granular recall-focused tuning.
+
+Summary
+-------
+The project successfully identifies system failures with up to 100% recall for the failure class in controlled test environments. By shifting from accuracy-driven to recall-driven optimization, the model provides genuine business value as a proactive maintenance diagnostic tool.
