@@ -58,18 +58,6 @@ The goal of this project is to create an early-warning system that identifies po
 **Run the app locally:**
 streamlit run "Predictive maintenance model training\app.py"
 
-## 🗂️ Project Structure
-Predictive-Maintenance/
-│
-├── Analysis.ipynb              # EDA and model experimentation
-├── app.py                      # Streamlit web application
-├── best_model.pkl              # Trained ML model
-├── scaler.pkl                  # Feature scaler
-├── system_logs_ready_min.csv   # Dataset
-├── requirements.txt            # Required Python libraries
-├── Final_Report.txt            # Technical project report
-└── README.md                   # Project documentation
-
 ## 🛠️ Implementation Strategy
 
 ### 1. Handling Extreme Imbalance
@@ -127,4 +115,5 @@ This project demonstrates a complete machine learning lifecycle, from raw data a
 **Muhammad Khizar Arif**
 Project - 2026
 Machine Learning & Data Science Enthusiast
+
 
